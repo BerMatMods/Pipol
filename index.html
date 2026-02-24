@@ -57,14 +57,15 @@
             50% { transform: scale(1.05); }
         }
 
-        @keyframes shimmer {
-            0% { background-position: -1000px 0; }
-            100% { background-position: 1000px 0; }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            70% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .container {
@@ -403,7 +404,7 @@
             box-shadow: 0 0 10px rgba(37, 211, 102, 0.5);
         }
 
-        /* Modal de feedback */
+        /* Modal de feedback original */
         .feedback-modal {
             display: none;
             position: fixed;
@@ -412,13 +413,14 @@
             transform: translate(-50%, -50%);
             background: white;
             padding: 30px;
-            border-radius: 20px;
+            border-radius: 24px;
             z-index: 2000;
             text-align: center;
             max-width: 90%;
             width: 400px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            animation: bounce 0.5s ease;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.4);
+            animation: popIn 0.4s ease;
+            border: 2px solid var(--light-green);
         }
 
         .feedback-modal h3 {
@@ -442,19 +444,21 @@
             flex: 1;
             padding: 12px;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.2s;
+            font-size: 14px;
         }
 
         .feedback-btn:hover {
-            transform: scale(1.05);
+            transform: scale(1.03);
         }
 
         .feedback-btn.yes {
             background: var(--primary-green);
             color: white;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
         }
 
         .feedback-btn.no {
@@ -462,6 +466,209 @@
             color: var(--text-main);
         }
 
+        /* === NUEVOS MODALES DECORADOS === */
+        
+        /* Modal de agradecimiento */
+        #thankyou-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 2100;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .thankyou-content {
+            background: white;
+            padding: 35px 30px;
+            border-radius: 28px;
+            width: 90%;
+            max-width: 420px;
+            text-align: center;
+            animation: popIn 0.5s ease;
+            box-shadow: 0 30px 90px rgba(0,0,0,0.5);
+            border: 3px solid var(--light-green);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .thankyou-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--gradient-1);
+        }
+
+        .thankyou-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+            animation: bounce 1s ease infinite;
+        }
+
+        .thankyou-content h3 {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: var(--text-main);
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .thankyou-content p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        /* Contenedor de opciones decorado */
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .option-btn {
+            padding: 16px 20px;
+            border: none;
+            border-radius: 18px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .option-btn:hover::before {
+            left: 100%;
+        }
+
+        .option-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .option-replay {
+            background: var(--gradient-2);
+            color: white;
+            box-shadow: 0 8px 25px rgba(0, 168, 132, 0.4);
+        }
+
+        .option-replay:hover {
+            box-shadow: 0 12px 35px rgba(0, 168, 132, 0.6);
+        }
+
+        .option-continue {
+            background: var(--gradient-1);
+            color: white;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+        }
+
+        .option-continue:hover {
+            box-shadow: 0 12px 35px rgba(37, 211, 102, 0.6);
+        }
+
+        /* Modal para "No me gustó" */
+        #notliked-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 2100;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .notliked-content {
+            background: white;
+            padding: 35px 30px;
+            border-radius: 28px;
+            width: 90%;
+            max-width: 420px;
+            text-align: center;
+            animation: popIn 0.5s ease;
+            box-shadow: 0 30px 90px rgba(0,0,0,0.5);
+            border: 3px solid #E5E5EA;
+            position: relative;
+        }
+
+        .notliked-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(135deg, #E5E5EA 0%, #C0C0C0 100%);
+        }
+
+        .notliked-icon {
+            font-size: 45px;
+            margin-bottom: 15px;
+            color: #888;
+        }
+
+        .notliked-content h3 {
+            font-size: 22px;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .notliked-content p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .btn-continue-anyway {
+            background: var(--gradient-1);
+            color: white;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        .btn-continue-anyway:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.6);
+        }
+
+        /* Overlay general */
         .overlay-bg {
             display: none;
             position: fixed;
@@ -529,6 +736,8 @@
             .main-title { font-size: 32px; }
             .features { grid-template-columns: 1fr; }
             .gallery { grid-template-columns: repeat(2, 1fr); }
+            .thankyou-content, .notliked-content { padding: 25px 20px; }
+            .option-btn { padding: 14px 16px; font-size: 14px; }
         }
     </style>
 </head>
@@ -591,25 +800,25 @@
             <h3 class="gallery-title">TE GUSTAN LAS TETAS🥵? </h3>
             <div class="gallery">
                 <div class="gallery-item">
-                    <img src="https://i.postimg.cc/pdX4rNyS/m-ea-Saa-Tba-Aaaaa-mh-a-HG7Uy-JS0-t-Hhw-FK13.jpg" alt="WhatsApp Plus 1" onerror="this.src='https://via.placeholder.com/200x200/25D366/FFFFFF?text=WhatsApp+1'">
+                    <img src="https://i.postimg.cc/pdX4rNyS/m-ea-Saa-Tba-Aaaaa-mh-a-HG7Uy-JS0-t-Hhw-FK13.jpg " alt="WhatsApp Plus 1" onerror="this.src='https://via.placeholder.com/200x200/25D366/FFFFFF?text=WhatsApp+1 '">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://i.postimg.cc/cJ42CqrN/m-q5QQ8SZbea-Saa-Tba-Aaaaa-mh-NPE4ORM-m-Cm-Pho-P70.jpg" alt="WhatsApp Plus 2" onerror="this.src='https://via.placeholder.com/200x200/128C7E/FFFFFF?text=WhatsApp+2'">
+                    <img src="https://i.postimg.cc/cJ42CqrN/m-q5QQ8SZbea-Saa-Tba-Aaaaa-mh-NPE4ORM-m-Cm-Pho-P70.jpg " alt="WhatsApp Plus 2" onerror="this.src='https://via.placeholder.com/200x200/128C7E/FFFFFF?text=WhatsApp+2 '">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://i.postimg.cc/MpYgzZKk/12.webp" alt="WhatsApp Plus 3" onerror="this.src='https://via.placeholder.com/200x200/00A884/FFFFFF?text=WhatsApp+3'">
+                    <img src="https://i.postimg.cc/MpYgzZKk/12.webp " alt="WhatsApp Plus 3" onerror="this.src='https://via.placeholder.com/200x200/00A884/FFFFFF?text=WhatsApp+3 '">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://i.postimg.cc/kgyL7MX9/17.webp" alt="WhatsApp Plus 4" onerror="this.src='https://via.placeholder.com/200x200/25D366/FFFFFF?text=WhatsApp+4'">
+                    <img src="https://i.postimg.cc/kgyL7MX9/17.webp " alt="WhatsApp Plus 4" onerror="this.src='https://via.placeholder.com/200x200/25D366/FFFFFF?text=WhatsApp+4 '">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://i.postimg.cc/NjxZQGGb/17-1.webp" alt="WhatsApp Plus 5" onerror="this.src='https://via.placeholder.com/200x200/128C7E/FFFFFF?text=WhatsApp+5'">
+                    <img src="https://i.postimg.cc/NjxZQGGb/17-1.webp " alt="WhatsApp Plus 5" onerror="this.src='https://via.placeholder.com/200x200/128C7E/FFFFFF?text=WhatsApp+5 '">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://i.postimg.cc/8CP9c8s2/1771947830192.jpg" alt="WhatsApp Plus 6" onerror="this.src='https://via.placeholder.com/200x200/00A884/FFFFFF?text=WhatsApp+6'">
+                    <img src="https://i.postimg.cc/8CP9c8s2/1771947830192.jpg " alt="WhatsApp Plus 6" onerror="this.src='https://via.placeholder.com/200x200/00A884/FFFFFF?text=WhatsApp+6 '">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://i.postimg.cc/3xZz3rJH/6.webp" alt="WhatsApp Plus 7" onerror="this.src='https://via.placeholder.com/200x200/25D366/FFFFFF?text=WhatsApp+7'">
+                    <img src="https://i.postimg.cc/3xZz3rJH/6.webp " alt="WhatsApp Plus 7" onerror="this.src='https://via.placeholder.com/200x200/25D366/FFFFFF?text=WhatsApp+7 '">
                 </div>
             </div>
         </div>
@@ -619,7 +828,7 @@
     <div id="video-section">
         <div class="video-info">
             <div class="video-counter" id="video-counter">ANUNCIO 1 DE 6</div>
-            <div class="video-title"> Contenido Patrocinado</div>
+            <div class="video-title">Contenido Patrocinado</div>
             <div class="video-subtitle">Mira el video completo para continuar</div>
         </div>
 
@@ -638,7 +847,7 @@
         </p>
     </div>
 
-    <!-- MODAL FEEDBACK -->
+    <!-- MODAL FEEDBACK ORIGINAL -->
     <div class="overlay-bg" id="overlay-bg"></div>
     <div class="feedback-modal" id="feedback-modal">
         <h3>¿Te gustó el video?</h3>
@@ -646,6 +855,36 @@
         <div class="feedback-buttons">
             <button class="feedback-btn yes" onclick="handleFeedback(true)">👍 Sí, me gustó</button>
             <button class="feedback-btn no" onclick="handleFeedback(false)">👎 No me gustó</button>
+        </div>
+    </div>
+
+    <!-- === NUEVO MODAL DE AGRADECIMIENTO === -->
+    <div id="thankyou-modal">
+        <div class="thankyou-content">
+            <div class="thankyou-icon">💚</div>
+            <h3>¡Gracias por tus comentarios!</h3>
+            <p>Nos alegra mucho que hayas disfrutado el contenido. Tu apoyo nos ayuda a seguir mejorando.</p>
+            
+            <div class="options-container">
+                <button class="option-btn option-replay" onclick="handleOption('replay')">
+                    🔄 Reproducir una vez más
+                </button>
+                <button class="option-btn option-continue" onclick="handleOption('continue')">
+                    ⏭️ Continuar con el siguiente
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PARA "NO ME GUSTÓ" -->
+    <div id="notliked-modal">
+        <div class="notliked-content">
+            <div class="notliked-icon">🤔</div>
+            <h3>Gracias por tu honestidad</h3>
+            <p>Lamentamos que no haya sido de tu agrado. Seguiremos trabajando para ofrecerte mejor contenido.</p>
+            <button class="btn-continue-anyway" onclick="handleOption('continue')">
+                ⏭️ Continuar de todas formas
+            </button>
         </div>
     </div>
 
@@ -676,6 +915,7 @@
 
         let currentVideoIndex = 0;
         let waitingForFeedback = false;
+        let feedbackResult = null;
         
         const videoElement = document.getElementById('main-video');
         const videoSection = document.getElementById('video-section');
@@ -683,6 +923,8 @@
         const progressBar = document.getElementById('progress-bar');
         const videoCounter = document.getElementById('video-counter');
         const feedbackModal = document.getElementById('feedback-modal');
+        const thankyouModal = document.getElementById('thankyou-modal');
+        const notlikedModal = document.getElementById('notliked-modal');
         const overlayBg = document.getElementById('overlay-bg');
 
         // Inicializar
@@ -715,6 +957,7 @@
             }
 
             waitingForFeedback = false;
+            feedbackResult = null;
             videoCounter.innerText = `ANUNCIO ${currentVideoIndex + 1} DE ${videos.length}`;
             progressBar.style.width = `${((currentVideoIndex) / videos.length) * 100}%`;
 
@@ -751,25 +994,38 @@
             overlayBg.style.display = 'block';
         }
 
-        // Manejar feedback
+        // Manejar feedback - AHORA MUESTRA MODALES DECORADOS
         function handleFeedback(liked) {
             feedbackModal.style.display = 'none';
             overlayBg.style.display = 'none';
+            feedbackResult = liked;
             
             if (liked) {
-                // Si le gustó, preguntar si quiere repetir
-                if (confirm('¡Genial! ¿Quieres volver a ver este video o continuar con el siguiente?')) {
-                    // Repetir video actual
-                    videoElement.currentTime = 0;
-                    videoElement.play();
-                    waitingForFeedback = false;
-                } else {
-                    // Continuar al siguiente
-                    currentVideoIndex++;
-                    playNextVideo();
-                }
+                // Mostrar modal de agradecimiento decorado
+                setTimeout(() => {
+                    thankyouModal.style.display = 'flex';
+                }, 300);
             } else {
-                // Si no le gustó, continuar de todas formas
+                // Mostrar modal alternativo decorado
+                setTimeout(() => {
+                    notlikedModal.style.display = 'flex';
+                }, 300);
+            }
+        }
+
+        // Manejar las opciones del modal decorado
+        function handleOption(choice) {
+            // Cerrar modales
+            thankyouModal.style.display = 'none';
+            notlikedModal.style.display = 'none';
+            
+            if (choice === 'replay') {
+                // Reproducir el mismo video nuevamente
+                videoElement.currentTime = 0;
+                videoElement.play();
+                waitingForFeedback = false;
+            } else if (choice === 'continue') {
+                // Continuar con el siguiente video
                 currentVideoIndex++;
                 playNextVideo();
             }
@@ -838,9 +1094,17 @@
             }
         }
 
-        // Cerrar modales al hacer click fuera
-        overlayBg.addEventListener('click', () => {
-            // No permitir cerrar el modal de feedback
+        // Cerrar modales al hacer click fuera (solo para modales decorados)
+        thankyouModal.addEventListener('click', (e) => {
+            if (e.target.id === 'thankyou-modal') {
+                // No permitir cerrar, forzar elección
+            }
+        });
+
+        notlikedModal.addEventListener('click', (e) => {
+            if (e.target.id === 'notliked-modal') {
+                handleOption('continue');
+            }
         });
 
         document.getElementById('premium-modal').addEventListener('click', (e) => {
